@@ -74,6 +74,10 @@ maq._adicionaTransicao('B','B',0,0,'D')
 maq._adicionaTransicao('_','_',0,4,'D')
 maq._adicionaTransicao('*','*',0,0,'D')
 
-maq._definePalavra("*aabbaa_")
+valida = 0
+for x in range(0, 15):
+	maq._definePalavra("*abba_")
+	if maq.executaLeitura():
+		valida+= 1
 
-maq.executaLeitura()
+print(valida)

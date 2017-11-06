@@ -8,48 +8,13 @@ class Maquina:
     self.estadoAtual = None
     self.estados = []
     
-  #INTERAÇOES COM O USUARIo
-  
-  def adicionaEstado(self):
-    final = int(input("Esse estado e final? (0 - Sim, 1 - Nao"))
-    final = True if final == 0 else False
-    self._adicionaEstado(indice, final)
-
-  def definePalavra(self):
-    inputPalavra = input("Qual a palavra que a maquina deve validar? ")
-    self._definePalavra(inputPalavra)
-  
-  def mostraPalavra(self):
-    self._mostraPalavra()
-
-  def adicionaTransicao(self):
-    estadoOrigem = int(input("Em qual estado essa transicao esta? "))
-    
-    if estadoOrigem > len(self.estados)-1 or len(self.estados) == 0:
-      print("Nao ha estado com este indice")
-      return False
-    
-    estadoDestino = int(input("Para que estado ir? "))
-    
-    if estadoDestino > len(self.estados)-1:
-      print("Nao ha estado destino com este indice")
-      return False
-    
-    encontrou = input("O que procurar? ")
-    substitui = input("O que inserir quando encontrar? ")
-    direcaoFita = input("Para que direcao seguir na fita quando encontrar? (D = Direita, E = Esquerda) ")
-    
-    if direcaoFita == 'D' or direcaoFita == 'E':
-      self._adicionaTransicao(estadoOrigem, Transicao(encontrou, substitui, estadoOrigem, direcaoFita, estadoDestino))
-    else:
-      print("Direcao invalida")
-      return False
-      
-  #Metodos privados de execucao somente interna, sem interface com o usuario
-  
   def _adicionaEstado(self, indice, final): #Adiciona um estado a lista
     self.estados.append(Estado(indice, final))
-    
+	
+  def _mostraEstados(self):
+    for estado in self.estados:
+      print(estado.indice)
+
   def _vaParaEstado(self, estado): #Define o estadoAtual como o estado indicado pela transicao
     self.estadoAtual = self.estados[estado]
 
@@ -77,7 +42,7 @@ class Maquina:
   def _buscaTransicao(self): #Busca a transição do estado atual para a posição atual do cursor
     return self.estadoAtual.encontraTransicao(self._posicaoPalavra())
 
-  def executaLeitura(self):
+  def _executaLeitura(self):
     self.estadoAtual = self.estados[0]
     while self.estadoAtual.final:
       transicao = self._buscaTransicao()
@@ -90,6 +55,8 @@ class Maquina:
       else:
         break
     if self.estadoAtual.final:
-      print("Palavra invalida")
+      return False
+      #print("Palavra invalida")
     else:
-      print("Palavra valida")
+      return True
+      #print("Palavra valida")
