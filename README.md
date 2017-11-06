@@ -5,7 +5,7 @@ Esse programa é a implementação de uma máquina de Turing.
 
 # Para utilizar:
 
-python cli.py <arquivo json da maquina> <palavra para ser testada>
+python cli.py < arquivo json da maquina > < palavra para ser testada >
 
 # Classes
 
