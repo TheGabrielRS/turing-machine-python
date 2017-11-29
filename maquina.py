@@ -18,16 +18,16 @@ class Maquina:
   def _vaParaEstado(self, estado): #Define o estadoAtual como o estado indicado pela transicao
     self.estadoAtual = self.estados[estado]
 
-  def _definePalavra(self, inputPalavra): #Define a palavra e insere as indicações de início e fim
+  def _definePalavra(self, inputPalavra): #Define a palavra e insere as indicaÃ§Ãµes de inÃ­cio e fim
     self.palavra = Palavra(inputPalavra)
 
   def _mostraPalavra(self): #Mostra a palavra atual
     print(self.palavra.getPalavra())
     
-  def _posicaoPalavra(self): #Retorna a letra que está sendo apontada
+  def _posicaoPalavra(self): #Retorna a letra que estÃ¡ sendo apontada
     return self.palavra.atual()
     
-  def _substituiPosicaoPalavra(self, substitui): #Faz a troca proposta pela transição
+  def _substituiPosicaoPalavra(self, substitui): #Faz a troca proposta pela transiÃ§Ã£o
     self.palavra.substitui(substitui)
     
   def _moveCursor(self, move): #Move o cursor para esquerda ou direita
@@ -36,27 +36,16 @@ class Maquina:
     else:
       self.palavra.esquerda()
 
-  def _adicionaTransicao(self, encontrou, substitui, estadoOrigem, estadoDestino, direcaoFita): #Adiciona uma transição para algum estado
+  def _adicionaTransicao(self, encontrou, substitui, estadoOrigem, estadoDestino, direcaoFita): #Adiciona uma transiÃ§Ã£o para algum estado
     self.estados[estadoOrigem].adicionaTransicao(Transicao(encontrou, substitui, estadoOrigem, estadoDestino, direcaoFita))
     
-  def _buscaTransicao(self): #Busca a transição do estado atual para a posição atual do cursor
+  def _buscaTransicao(self): #Busca a transiÃ§Ã£o do estado atual para a posiÃ§Ã£o atual do cursor
     return self.estadoAtual.encontraTransicao(self._posicaoPalavra())
 
   def _executaLeitura(self):
-    self.estadoAtual = self.estados[0]
-    while self.estadoAtual.final:
-      transicao = self._buscaTransicao()
-      if transicao != False:
-        if transicao.encontrou != transicao.substitui:
-          self._substituiPosicaoPalavra(transicao.substitui)
-        self._moveCursor(transicao.direcaoFita)
-        if self.estadoAtual != transicao.estadoDestino:
-          self._vaParaEstado(transicao.estadoDestino)
-      else:
-        break
-    if self.estadoAtual.final:
-      return False
-      #print("Palavra invalida")
-    else:
-      return True
-      #print("Palavra valida")
+    self.estadoAtual = self.estados[0] #inicia pelo estado 0
+    while self.estadoAtual.final: #enquanto nao for o estado final
+      transicao = self._buscaTransicao() #busca uma transicao no estado correspondente de acordo com a posicao atual do cursor
+      if transicao != False: #caso nao haja uma transicÃ£o para o que foi encontrado, sai do while
+        if transicao.encontrou != transicao.substitui: #so realiza a alteracao caso os valores sejam diferentes
+          self._substituiPosicaoPalavra(transicao.substitui) #realiza a substituicao da letra na devida posicao
