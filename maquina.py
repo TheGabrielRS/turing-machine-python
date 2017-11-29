@@ -49,3 +49,17 @@ class Maquina:
       if transicao != False: #caso nao haja uma transicÃ£o para o que foi encontrado, sai do while
         if transicao.encontrou != transicao.substitui: #so realiza a alteracao caso os valores sejam diferentes
           self._substituiPosicaoPalavra(transicao.substitui) #realiza a substituicao da letra na devida posicao
+          palavra = self._mostraPalavra()
+          if palavra != None:
+             print(palavra) #mostra a palavra somente quando ha alteracao
+        self._moveCursor(transicao.direcaoFita) #move a fita
+        if self.estadoAtual != transicao.estadoDestino: #so altera o estado caso eles sejam diferentes
+          self._vaParaEstado(transicao.estadoDestino) #altera o estado atual
+      else:
+        break #aqui sai do while
+    if self.estadoAtual.final: #verifica se a saida do while foi por ser a transicao final ou por nao haver transicao programada
+      return False
+      #print("Palavra invalida")
+    else:
+      return True
+      #print("Palavra valida")
